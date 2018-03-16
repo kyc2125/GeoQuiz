@@ -5,8 +5,10 @@ import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Button;
 
+import java.util.ArrayList;
 
-public class QuizActivity extends AppCompatActivity {
+
+public class MainActivity extends AppCompatActivity {
 
     private int mTextResId;
     private boolean mAnswer;
@@ -14,21 +16,26 @@ public class QuizActivity extends AppCompatActivity {
     private Button mFalseButton;
     private TextView mQuestionTextView;
     private Button showAnswerButton;
-
-    public static Intent newIntent(Context packageContext, boolean asnswerIsCorrect);
-    Intent intent =new Intent(packageConext, cheat activity class )
-
-
-
-
-
-
-
+    private Question [] questionlist=new Question[]{
+            new Question (getString (  R.string.question_africa), false),
+            new Question (getString ( R.string.question_americas), true),
+            new Question(getString ( R.string.question_asia), true),
+            new Question (getString (R.string.question_australia), false),
+            new  Question (getString (R.string.question_midest), false),
+            new Question (getString (R.string.question_oceans), true)
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
     }
+
+    //public static Intent newIntent(Context packageContext, boolean asnswerIsCorrect);
+    //Intent intent =new Intent(packageConext, cheat activity class )
+
+
+
 
 
 }
