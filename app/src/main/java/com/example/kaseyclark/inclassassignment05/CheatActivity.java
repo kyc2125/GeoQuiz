@@ -34,6 +34,9 @@ public class CheatActivity extends AppCompatActivity {
                     answer_text.setText("True");
                 else
                     answer_text.setText("False");
+                Intent intent2 = new Intent();
+                        intent2.putExtra("cheat", true);
+                        setResult(RESULT_OK, intent2);
             }
 
         });

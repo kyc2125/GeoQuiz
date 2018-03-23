@@ -1,5 +1,6 @@
 package com.example.kaseyclark.inclassassignment05;
 
+import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -24,10 +25,28 @@ public class MainActivity extends AppCompatActivity
     private int mQuestion_Index;
     private Button next_button;
     private Question [] questionlist=new Question[6];
+    private static final int CHEATCODE=0;
+    private boolean isCheater;
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (resultCode != Activity.RESULT_OK)
+            return;
+
+
+        if (requestCode == CHEATCODE) {
+            if (data == null)
+                return;
+            isCheater=data.getBooleanExtra("cheat", false);
+
+        }
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         questionlist[0]= new Question (getString (  R.string.question_africa), false);
@@ -63,17 +82,20 @@ public class MainActivity extends AppCompatActivity
 
 
         });
+
         mTrueButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
 
                 Question mCurrentQuestion= questionlist [mQuestion_Index];
-
-            if (mCurrentQuestion.isStatementTrue())
+                if (isCheater==true)
+                    Toast.makeText(MainActivity.this, "You Cheated!", Toast.LENGTH_SHORT).show();
+            else if (mCurrentQuestion.isStatementTrue())
                 Toast.makeText(MainActivity.this, R.string.correct_toast, Toast.LENGTH_SHORT).show();
             else
                 Toast.makeText(MainActivity.this, R.string.incorrect_toast, Toast.LENGTH_SHORT).show();
+
             }
 
 
@@ -85,8 +107,9 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View view) {
 
                 Question mCurrentQuestion= questionlist [mQuestion_Index];
-
-                if (mCurrentQuestion.isStatementTrue())
+                if (isCheater==true)
+                    Toast.makeText(MainActivity.this, "You Cheated!", Toast.LENGTH_SHORT).show();
+                else if (mCurrentQuestion.isStatementTrue())
                     Toast.makeText(MainActivity.this, R.string.incorrect_toast, Toast.LENGTH_SHORT).show();
                 else
                     Toast.makeText(MainActivity.this, R.string.correct_toast, Toast.LENGTH_SHORT).show();
@@ -104,7 +127,7 @@ public class MainActivity extends AppCompatActivity
 
                 Intent intent = new Intent (MainActivity.this, CheatActivity.class);
                 intent.putExtra("answer", mCurrentQuestion.isStatementTrue() );
-                startActivity( intent);
+                startActivityForResult(intent, CHEATCODE);
             }
 
 
